@@ -2,8 +2,7 @@ const { deployContract } = require('../util');
 
 async function main() {
   try {
-    const rskStarterLogs = await deployContract('RskStarterLogs');
-    await deployContract('RskStarter', rskStarterLogs.address);
+    const LottoTickets = await deployContract('LottoTickets','ipfs//QmRDKjZLj2Yfd4eEEBo8gU2X2FCbMsRUqj79iqFkzUuYKS/');
   } catch (error) {
     console.error(error);
     process.exitCode = 1;

@@ -16,16 +16,24 @@
     "new-rsktestnet-seed-phrase": "hardhat run scripts/setup-seed-phrase.js --network rsktestnet",
     "new-rsktestnet-block": "hardhat run scripts/setup-latest-block.js --network rsktestnet"
   },
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.9.3"
+  },
   "devDependencies": {
-    "@nomiclabs/hardhat-ethers": "2.0.5",
-    "@nomiclabs/hardhat-waffle": "2.0.3",
-    "chai": "4.3.6",
+    "@nomiclabs/hardhat-ethers": "^2.0.5",
+    "@nomiclabs/hardhat-waffle": "^2.0.3",
+    "bip39": "^3.0.4",
+    "chai": "^4.3.6",
+    "erc721a": "^4.2.3",
+    "eslint": "^8.10.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-vue": "^9.0.0",
     "ethereum-waffle": "3.4.4",
-    "ethers": "5.6.2",
-    "hardhat": "2.9.7",
-    "bip39": "3.0.4",
-    "prettier": "2.6.2",
+    "ethers": "5.7.2",
+    "hardhat": "^2.17.3",
+    "prettier": "^2.6.2",
     "prettier-plugin-solidity": "1.0.0-dev.22",
-    "solidity-coverage": "0.7.21"
+    "solidity-coverage": "^0.7.21"
   }
 }
