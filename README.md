@@ -1,4 +1,4 @@
-# `rsk-hardhat-starter`
+# `Ensigna smart contracts`
 
 ## Get started
 
