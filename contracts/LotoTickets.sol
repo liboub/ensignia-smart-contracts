@@ -10,7 +10,7 @@ import '@openzeppelin/contracts/utils/Strings.sol';
 contract LottoTickets is Ownable, ERC721A {
     using Strings for uint256;
 
-    uint256 public mintCost = 0.1 ether;
+    uint256 public mintCost = 0.0001 ether;
     uint256 public supplyTotal;
     string public baseURI;
     string public baseExtension = ".json";

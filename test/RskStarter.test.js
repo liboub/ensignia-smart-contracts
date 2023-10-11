@@ -6,19 +6,15 @@ describe('LottoTickets', () => {
   let user;
   let lottoTickets;
 
-  const mintCost = ethers.utils.parseEther('0.1'); // 1 ether
+  const mintCost = ethers.utils.parseEther('0.0001'); // 1 ether
   beforeEach(async () => {
     [owner, user] = await ethers.getSigners();
-
-    const LottoTickets = await ethers.getContractFactory('LottoTickets');
-    lottoTickets = await LottoTickets.deploy('https://example.com/');
-    await lottoTickets.deployed();
   });
 
   before(async () => {
     lottoTickets = await deployContract(
       'LottoTickets',
-      'ipfs//QmRDKjZLj2Yfd4eEEBo8gU2X2FCbMsRUqj79iqFkzUuYKS/',
+      'ipfs//QmesotUeUcMRhTEvpHhM3F7KN24Pzf9hzGzqaCmuCvFfBD/',
     );
   });
 
@@ -32,7 +28,7 @@ describe('LottoTickets', () => {
       expect(await lottoTickets.name()).to.equal('lottoTickets');
       expect(await lottoTickets.symbol()).to.equal('LT');
       expect(await lottoTickets.mintCost()).to.equal(mintCost);
-      expect(await lottoTickets.baseURI()).to.equal('https://example.com/');
+      expect(await lottoTickets.baseURI()).to.equal('ipfs//QmesotUeUcMRhTEvpHhM3F7KN24Pzf9hzGzqaCmuCvFfBD/');
       expect(await lottoTickets.getTotalMinted()).to.equal(0);
     });
   });
@@ -52,7 +48,7 @@ describe('LottoTickets', () => {
       const quantity = 3;
       const insufficientFunds = mintCost
         .mul(quantity)
-        .sub(ethers.utils.parseEther('0.5')); // Less than required
+        .sub(ethers.utils.parseEther('0.00001')); // Less than required
 
       await expect(
         lottoTickets
