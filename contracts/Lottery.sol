@@ -2,6 +2,7 @@ pragma solidity ^0.8.0;
 
 //@author Antoine Libouban
 //@title Lottery.sol
+// SPDX-License-Identifier: UNLICENSED
 
 
 import "@openzeppelin/contracts/utils/Strings.sol";

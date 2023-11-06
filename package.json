@@ -17,7 +17,8 @@
     "new-rsktestnet-block": "hardhat run scripts/setup-latest-block.js --network rsktestnet"
   },
   "dependencies": {
-    "@openzeppelin/contracts": "^4.9.3"
+    "@openzeppelin/contracts": "^4.9.3",
+    "openzeppelin-solidity": "^3.4.2"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.5",
