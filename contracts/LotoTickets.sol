@@ -17,13 +17,13 @@ contract LottoTickets is Ownable, ERC721A, ReentrancyGuard {
     uint256 public mintCost = 1;
     uint256 public supplyTotal;
     string public baseURI;
-    string public baseExtension = '.json';
 
-    constructor(string memory _initBaseURI, address payable _docTokenAddress)
-        ERC721A('LottoTickets', 'LT') // <-- Added this line
+    constructor( address payable _docTokenAddress)
+        ERC721A('LottoTickets', 'LT')
     {
-        setBaseURI(_initBaseURI);
-        docToken = IERC20(address(_docTokenAddress)); // Initialize the DocToken instance with its address
+        baseURI = "https://ipfs.io/ipfs/QmR5JoJjhLWKdYPAnphHeZ5m2QT5tmAHPLLbxe6SmW96NT";
+
+    docToken = IERC20(address(_docTokenAddress)); // Initialize the DocToken instance with its address
     }
 
     // to be sure is not called by another contract
@@ -43,7 +43,7 @@ contract LottoTickets is Ownable, ERC721A, ReentrancyGuard {
 
         uint256 tokensToSend = totalCost * 10**18;
         require(
-            docToken.allowance(msg.sender, address(this)) >= totalCost,
+            docToken.allowance(msg.sender, address(this)) >= tokensToSend,
             'Approve DocToken first'
         );
         bool sent = docToken.transferFrom(
@@ -62,13 +62,7 @@ contract LottoTickets is Ownable, ERC721A, ReentrancyGuard {
         // supplyTotal += quantity;
     }
 
-    function mint(address _to, uint256 quantity) public payable callerIsUser {
-        // require positive quantity
-        require(quantity > 0);
-        // require with this new mint the max supply willl not reach
-        require(msg.value >= (mintCost * quantity), 'Not enough funds');
-        super._safeMint(_to, quantity);
-    }
+
 
     function withdraw() external payable onlyOwner {
         require(payable(msg.sender).send(address(this).balance));
@@ -91,7 +85,10 @@ contract LottoTickets is Ownable, ERC721A, ReentrancyGuard {
         return docToken.balanceOf(address(this));
     }
 
-    function setBaseURI(string memory _newBaseURI) private onlyOwner {
-        baseURI = _newBaseURI;
+    // we override it to got ntf with same metadatas
+    function tokenURI(uint256 tokenId) public view override returns (string memory) {
+        require(_exists(tokenId), "ERC721Metadata: URI query for nonexistent token");
+        // Returning the same URI for every token
+        return baseURI;
     }
 }
