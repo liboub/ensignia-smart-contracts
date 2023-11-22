@@ -18,7 +18,7 @@ contract LottoTicketsERC20 is ERC20, ReentrancyGuard {
         _;
     }
 
-    function mintWithDOC(uint256 quantity) public nonReentrant callerIsUser {
+    function mint(uint256 quantity) public nonReentrant callerIsUser {
         require(quantity > 0, 'Quantity must be positive');
         uint256 totalCost = mintCost * quantity;
         uint256 tokensToSend = totalCost * 10**18; // Assuming the cost is in a token with 18 decimals
@@ -34,6 +34,25 @@ contract LottoTicketsERC20 is ERC20, ReentrancyGuard {
         require(sent, 'DocToken transfer failed');
         _mint(msg.sender, quantity);
         totalMinted += quantity;
+    }
+
+    function redeemTicket(uint256 quantity) public nonReentrant callerIsUser {
+        require(quantity > 0, 'Quantity must be positive');
+        require(
+            this.balanceOf(msg.sender) >= quantity,
+            'Insufficient LTT balance'
+        );
+
+        _burn(msg.sender, quantity);
+
+        uint256 docTokensToSend = quantity * mintCost * 10**18;
+        require(
+            docToken.balanceOf(address(this)) >= docTokensToSend,
+            'Insufficient DOC balance in contract'
+        );
+
+        bool sent = docToken.transfer(msg.sender, docTokensToSend);
+        require(sent, 'DOC Token transfer failed');
     }
 
     function getCapital() external view returns (uint256) {
